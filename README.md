@@ -20,7 +20,7 @@ The sigmoidal activation mediates all the node inter-connections.
 Let *A* and *B* be the inputs. The classical two-layer network permits
 an output which is basically quadratic in *A* and *B*. There are two
 solutions of the quadratic corresponding to the ambiguity of
-*XOR* for *A = B = 1/2*. The gif outputs are plots of the *XOR(A,B)*
+*XOR* for *A = B = 0.5*. The gif outputs are plots of the *XOR(A,B)*
 evaluated for a mesh grid of *A* and *B* during the training.
 
 | solution *0* | solution *1* |
@@ -39,7 +39,8 @@ evaluated for a mesh grid of *A* and *B* during the training.
 ```
 produced a png file for each plot. ``p`` is a set of random weights and
 biases to initial the network elements. ``XORData.TABLE0`` and
-``XORData.TABLE1`` are ``XORData.TRUTHTABLE`` modified for
+``XORData.TABLE1`` are ``XORData.TRUTHTABLE`` with the additions of
+*XOR(0.5,0.5)=0* and *XOR(0.5,0.5)=1* to train the network to
 solution *0* and solution *1* respectively.
 
 ```shell
