@@ -47,3 +47,7 @@ $ convert -geometry 400x400 -delay 30 t0_*.png t0.gif
 $ convert -geometry 400x400 -delay 30 t1_*.png t1.gif
 ```
 produced the gif files
+
+## Analysis
+``xor.gp`` is a ``gnuplot`` script to illustrate the mathematical
+analysis for the solutions of the network.
