@@ -2,7 +2,7 @@
 
 ## A classical XOR neural network using [**pytorch**](https://pytorch.org) in **python3** 
 
-``xor_ö.py`` tested an implementation and the training of
+``xor.py`` tested an implementation and the training of
 a simple neural network using [pytorch](http://pytorch.org).
 The implemented neural network evaluates **XOR** for
 two noisy inputs, *A* and *B*.  The classical network
@@ -84,7 +84,7 @@ def forward(self,x):
     return x
 ```
 
-``XORNet3`` is a simple upgrade of ``XORNet`` of ``xor_ö.py``.
+``XORNet3`` is a simple upgrade of ``XORNet`` of ``xor.py``.
 Training can use ``XORDATA.TRUTHTABLE`` un-modified unlike the
 case of the two-layer network. The noise in *A* and *B* takes
 the full span of ``[-0.5,0.5]``. (*\*note\* ``XORNet3`` is
