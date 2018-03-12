@@ -70,14 +70,6 @@ class XORNet(nn.Module):
       (fc0): Linear (2 -> 2)
       (fc1): Linear (2 -> 1)
     )
-    >>> net.setparams_zeros()
-    >>> net.setparams() == OrderedDict([
-    ...     ('fc0.weight', [[0.0, 0.0], [0.0, 0.0]]),
-    ...     ('fc0.bias', [0.0, 0.0]),
-    ...     ('fc1.weight', [[0.0, 0.0]]),
-    ...     ('fc1.bias', [0.0]),
-    ... ])
-    True
 
     """
 
@@ -89,15 +81,6 @@ class XORNet(nn.Module):
     def forward(self,x):
         x = F.sigmoid(self.fc0(x))
         return F.sigmoid(self.fc1(x))
-
-    def setparams(self,namevalues={}):
-        paramdict = OrderedDict()
-        for name,param in self.named_parameters():
-            values = namevalues.get(name)
-            if values is not None:
-                param.data.set_(FloatTensor(values))
-            paramdict[name] = param.data.tolist()
-        return paramdict
 
     def setparams_zeros(self):
         for p in self.parameters():
@@ -125,7 +108,7 @@ class XOR(object):
 
     def __init__(self,lr=LEARNING_RATE):
         self.net = XORNet()
-        self.params_start = self.net.setparams()
+        self.state_start = self.net.state_dict()
         self.loss = nn.MSELoss()
         self.optim = optim.Adam(self.net.parameters(),lr)
         self.l = self.training # shorthand
@@ -177,12 +160,6 @@ class XOR(object):
         mp.draw()
         mp.pause(0.05)
 
-    def view(self,namevalues={}):
-        paramdict = self.net.setparams(namevalues)
-        for name,value in paramdict.items():
-            print(name,value)
-        self.splot()
-
     def __repr__(self):
         return "\n".join([
             'XOR (',
@@ -208,26 +185,26 @@ if __name__ == "__main__":
     if sys.argv[0] == "": # if python is in an emacs buffer:
         print(doctest.testmod(optionflags=doctest.REPORT_ONLY_FIRST_FAILURE))
 
-    p0 = OrderedDict((
-        ('fc0.weight',[[20,-20],[20,-20]]),
-        ('fc0.bias',[-15,15]),
-        ('fc1.weight',[[20,-20]]),
-        ('fc1.bias',[10]),
+    state0_dict = OrderedDict((
+        ('fc0.weight',FloatTensor([[20,-20],[20,-20]])),
+        ('fc0.bias',FloatTensor([-15,15])),
+        ('fc1.weight',FloatTensor([[20,-20]])),
+        ('fc1.bias',FloatTensor([10])),
         ))
 
-    p1 = OrderedDict((
-        ('fc0.weight',[[20,20],[20,20]]),
-        ('fc0.bias',[-35,-5]),
-        ('fc1.weight',[[20,-20]]),
-        ('fc1.bias',[10]),
+    state1_dict = OrderedDict((
+        ('fc0.weight',FloatTensor([[20,20],[20,20]])),
+        ('fc0.bias',FloatTensor([-35,-5])),
+        ('fc1.weight',FloatTensor([[20,-20]])),
+        ('fc1.bias',FloatTensor([10])),
         ))
 
-    p = OrderedDict((
-        ('fc0.weight',[[0.1, 0.6],[-0.3, -0.6]]),
-        ('fc0.bias',[-0.3, 0.5]),
-        ('fc1.weight',[[0.4, 0.0]]),
-        ('fc1.bias',[-0.4])))
-
+    state_dict = OrderedDict((
+        ('fc0.weight',FloatTensor([[0.1, 0.6],[-0.3, -0.6]])),
+        ('fc0.bias',FloatTensor([-0.3, 0.5])),
+        ('fc1.weight',FloatTensor([[0.4, 0.0]])),
+        ('fc1.bias',FloatTensor([-0.4])),
+        ))
 
     # some shorthands
     t = XORData.TRUTHTABLE

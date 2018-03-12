@@ -1,6 +1,6 @@
 # xor_pytorch
 
-## A classical XOR neural network using [**pytorch**](https://pytorch.org) in **python3** 
+## A classical XOR neural network using [**pytorch**](https://pytorch.org) in **python3**
 
 ``xor.py`` tested an implementation and the training of
 a simple neural network using [pytorch](http://pytorch.org).
@@ -10,11 +10,11 @@ consists of one input and one hidden layers.
 
 ```
 >>> net = XORNet()
->>> net                                                                     
-XORNet (                                                                    
-  (fc0): Linear (2 -> 2)                                                    
-  (fc1): Linear (2 -> 1)                                                    
-)                                                                           
+>>> net
+XORNet (
+  (fc0): Linear (2 -> 2)
+  (fc1): Linear (2 -> 1)
+)
 ```
 
 The sigmoidal activation mediates all the node inter-connections.
@@ -36,21 +36,22 @@ evaluated for a mesh grid of *A* and *B* during the training.
 ## Training
 
 ```
->>> xor = XOR() 
->>> xor.view(p) # initialize the network parameters
+>>> xor = XOR()
+>>> xor.net.load_state_dict(state_dict)
 >>> # training for solution 0
 >>> xor.training(nbatch=25,delta=0.2,table=XORData.TABLE0,save='t0')
->>> xor.view(p) # re-initialize the network parameters
+>>> xor.net.load_state_dict(state_dict) # reset the start state
 >>> # training for solution 1
 >>> xor.training(nbatch=25,delta=0.2,table=XORData.TABLE1,save='t1')
 ```
 
 ``xor.training`` plots and produces a png file for each batch procssed.
-``p`` is a set of random weights and biases to initial the network elements.
-``XORData.TABLE0`` and ``XORData.TABLE1`` are ``XORData.TRUTHTABLE`` with
-the additions of *XOR(0.5,0.5)=0* and *XOR(0.5,0.5)=1* to prime the network
-to solution *0* and solution *1* respectively. The random noise in
-*A* and *B* is uniform in the range ``[-delta,+delta]``.
+``state_dict`` is a set of random weights and biases to initial the
+network elements.  ``XORData.TABLE0`` and ``XORData.TABLE1`` are
+``XORData.TRUTHTABLE`` with the additions of *XOR(0.5,0.5)=0* and
+*XOR(0.5,0.5)=1* to prime the network to solution *0* and solution *1*
+respectively. The random noise in *A* and *B* is uniform in the range
+``[-delta,+delta]``.
 
 ## Animations
 
@@ -67,7 +68,7 @@ solutions of the network.
 
 # Higher order solutions
 Higher order networks seek to introduce higher symmetry to the
-solution. A third layer would perform linear combinations of outputs 
+solution. A third layer would perform linear combinations of outputs
 from the two-layer feeder networks below. Consider
 
 ```python
